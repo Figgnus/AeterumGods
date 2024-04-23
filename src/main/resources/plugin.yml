@@ -1,0 +1,20 @@
+name: AeterumGods
+version: '${project.version}'
+main: me.figgnus.aeterumgods.AeterumGods
+api-version: '1.20'
+commands:
+  nightvision:
+    description: "Gives player with permission ability to toggle night vision"
+    usage: /<command>
+  breeding:
+    description: "Gives player consumable item that allows player to breed animals while having access to just one"
+    usage: /<command>
+  flying:
+    description: "Gives player item that allows player to propel himself like using rockets"
+    usage: /<command>
+  trident:
+    description: "Gives player trident"
+    usage: /<command>
+  dolphinsgrace:
+    description: "Toggles dolphin's grace effect"
+    usage: /<command>
