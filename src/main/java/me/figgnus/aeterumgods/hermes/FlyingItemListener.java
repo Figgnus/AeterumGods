@@ -15,10 +15,10 @@ public class FlyingItemListener implements Listener {
         // Check if the player is holding the custom item
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
-        if (!(player.hasPermission("aeterumgods.hermes"))){
+        if (!(player.hasPermission("aeterumgods.flyingitem.use"))){
             event.setCancelled(true);
         }
-        if (player.hasPermission("aeterumgods.hermes"))
+        if (player.hasPermission("aeterumgods.flyingitem.use"))
         if (item != null && item.getType() == Material.STONE_SWORD && item.getItemMeta().hasCustomModelData() && item.getItemMeta().getCustomModelData() == 102) {
             if (event.getPlayer().isGliding()) {
                 // Propel the player

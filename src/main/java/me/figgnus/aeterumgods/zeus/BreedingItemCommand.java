@@ -15,7 +15,7 @@ public class BreedingItemCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if (sender instanceof Player player){
-            if (player.hasPermission("aeterumgods.zeus.commands")){
+            if (player.hasPermission("aeterumgods.breeding.admin")){
                 player.getInventory().addItem(createBreedingItem());
             }else {
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this");

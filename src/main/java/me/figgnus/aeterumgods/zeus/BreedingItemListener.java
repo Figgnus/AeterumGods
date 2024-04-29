@@ -1,6 +1,7 @@
 package me.figgnus.aeterumgods.zeus;
 
 import me.figgnus.aeterumgods.AeterumGods;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -33,12 +34,14 @@ public class BreedingItemListener implements Listener {
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getInventory().getItemInMainHand();
         UUID playerId = player.getUniqueId();
-
-
+        if (!player.hasPermission("aeterumgods.breeding.use")){
+            player.sendMessage(ChatColor.RED + "You can't use this item.");
+            return;
+        }
         if (itemInHand != null &&
                 itemInHand.hasItemMeta() &&
                 Objects.requireNonNull(itemInHand.getItemMeta()).getCustomModelData() == 103 &&
-                player.hasPermission("aeterumgods.zeus")){
+                player.hasPermission("aeterumgods.breeding.use")){
             // Check cooldown
             if (cooldown.containsKey(playerId) && (System.currentTimeMillis() - cooldown.get(playerId)) < COOLDOWN_TIME) {
                 return;

@@ -14,7 +14,7 @@ public class FlyingItemCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
 
         if (sender instanceof Player player){
-            if (player.hasPermission("aeterumgods.hermes.commands")){
+            if (player.hasPermission("aeterumgods.flyingitem.admin")){
                 player.getInventory().addItem(createCustomItem());
             }else {
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this");
@@ -29,7 +29,7 @@ public class FlyingItemCommand implements CommandExecutor {
 
         // Set custom model data (ensure the number is unique)
         meta.setCustomModelData(102);
-        meta.setDisplayName(ChatColor.DARK_PURPLE + "Fly! Forrest Fly!");
+        meta.setDisplayName(ChatColor.GREEN + "Fly! Forrest Fly!");
         customSword.setItemMeta(meta);
 
         // Optional: Add the item to some inventory or give it to players
