@@ -11,10 +11,10 @@ import org.bukkit.permissions.PermissionAttachment;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class HadesCommands implements CommandExecutor {
+public class NightVisionCommand implements CommandExecutor {
     private final AeterumGods plugin;
     HashMap<UUID, PermissionAttachment> perms = new HashMap<>();
-    public HadesCommands(AeterumGods plugin) {
+    public NightVisionCommand(AeterumGods plugin) {
         this.plugin = plugin;
     }
 

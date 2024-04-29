@@ -5,7 +5,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Animals;
-import org.bukkit.entity.Breedable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,19 +12,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ZeusListener implements Listener {
+public class BreedingItemListener implements Listener {
     private final AeterumGods plugin;
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private static final long COOLDOWN_TIME = 1000; // Cooldown time in milliseconds (1 second)
 
-    public ZeusListener(AeterumGods plugin) {
+    public BreedingItemListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 

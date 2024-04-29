@@ -1,7 +1,6 @@
 package me.figgnus.aeterumgods.hades;
 
 import me.figgnus.aeterumgods.AeterumGods;
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,10 +9,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class HadesListener implements Listener {
+public class NightVisionListener implements Listener {
     private final AeterumGods plugin;
 
-    public HadesListener(AeterumGods plugin) {
+    public NightVisionListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 

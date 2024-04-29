@@ -15,6 +15,6 @@ commands:
   trident:
     description: "Gives player trident"
     usage: /<command>
-  dolphinsgrace:
+  dolphingrace:
     description: "Toggles dolphin's grace effect"
     usage: /<command>
