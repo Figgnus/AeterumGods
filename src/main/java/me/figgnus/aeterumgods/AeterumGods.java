@@ -25,7 +25,7 @@ public final class AeterumGods extends JavaPlugin {
         getCommand("breeding").setExecutor(new ZeusCommand());
         getCommand("flying").setExecutor(new HermesCommand());
         getCommand("trident").setExecutor(new TridentCommand());
-        
+
     }
 
     @Override
