@@ -1,0 +1,54 @@
+package me.figgnus.aeterumgods.hermes;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+public class SpeedBootsListener implements Listener, CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+
+        if (!(sender instanceof Player)){
+            sender.sendMessage(ChatColor.RED + "Only players can use this command.");
+        }
+        Player player = (Player) sender;
+        if (!player.hasPermission("aeterumgods.speedboots.admin")){
+            player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+        }
+        player.getInventory().addItem(createBoots());
+        return true;
+    }
+    @EventHandler
+    private void onPlayerMove(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+        if (!player.hasPermission("aeterumgods.speedboots.use")){
+            player.sendMessage(ChatColor.RED + "You can't use this item.");
+            return;
+        }
+        ItemStack boots = player.getInventory().getBoots();
+        if (boots != null && boots.getItemMeta().getCustomModelData() == 104){
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false));
+        }else{
+            player.removePotionEffect(PotionEffectType.SPEED);
+        }
+    }
+
+    private ItemStack createBoots() {
+        ItemStack boots = new ItemStack(Material.IRON_BOOTS);
+        ItemMeta meta = boots.getItemMeta();
+        meta.setDisplayName("Boots of Speed");
+        meta.setCustomModelData(104);
+        boots.setItemMeta(meta);
+        return boots;
+    }
+}

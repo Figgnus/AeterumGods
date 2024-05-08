@@ -18,3 +18,9 @@ commands:
   dolphingrace:
     description: "Toggles dolphin's grace effect"
     usage: /<command>
+  conduit:
+    description: "Gives player custom conduit"
+    usage: /<command>
+  boots:
+    description: "Gives player custom boots"
+    usage: /<command>
