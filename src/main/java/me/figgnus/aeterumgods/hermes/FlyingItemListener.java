@@ -7,6 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class FlyingItemListener implements Listener {
@@ -19,7 +21,16 @@ public class FlyingItemListener implements Listener {
             event.setCancelled(true);
         }
         if (player.hasPermission("aeterumgods.flyingitem.use"))
-        if (item != null && item.getType() == Material.STONE_SWORD && item.getItemMeta().hasCustomModelData() && item.getItemMeta().getCustomModelData() == 102) {
+        if (item != null && item.getType() == Material.STONE_SWORD &&
+                item.getItemMeta().hasCustomModelData() &&
+                item.getItemMeta().getCustomModelData() == 102) {
+            ItemMeta meta = item.getItemMeta();
+            Damageable damageable = (Damageable) meta;
+            int currentDamage = damageable.getDamage();
+            if (currentDamage == item.getType().getMaxDurability()){
+                return;
+            }
+
             if (event.getPlayer().isGliding()) {
                 // Propel the player
                 Vector direction = event.getPlayer().getLocation().getDirection();
@@ -28,10 +39,36 @@ public class FlyingItemListener implements Listener {
                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1f,1f);
 
                 // Reduce the durability of the item
-                item.setDurability((short) (item.getDurability() + 1));
+                adjustItemDurability(item, 1);
+
 
                 // Cancel the event to prevent default action
                 event.setCancelled(true);
+            }
+        }
+    }
+
+    private void adjustItemDurability(ItemStack item, int i) {
+        // Check if the item has meta data
+        if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+
+            // Check if the meta data is an instance of Damageable
+            if (meta instanceof Damageable damageable) {
+
+                // Get current damage
+                int currentDamage = damageable.getDamage();
+
+                // Modify the damage (increase for wear, decrease for repair)
+                damageable.setDamage(currentDamage + i);
+
+                // Check for over-damage (optional, if you want to prevent breaking)
+                if (damageable.getDamage() > item.getType().getMaxDurability()) {
+                    damageable.setDamage(item.getType().getMaxDurability());
+                }
+
+                // Set the modified meta back to the item
+                item.setItemMeta((ItemMeta) damageable);
             }
         }
     }

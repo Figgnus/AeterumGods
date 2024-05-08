@@ -40,6 +40,7 @@ public class BreedingItemListener implements Listener {
         }
         if (itemInHand != null &&
                 itemInHand.hasItemMeta() &&
+                itemInHand.getItemMeta().hasCustomModelData() &&
                 Objects.requireNonNull(itemInHand.getItemMeta()).getCustomModelData() == 103 &&
                 player.hasPermission("aeterumgods.breeding.use")){
             // Check cooldown
