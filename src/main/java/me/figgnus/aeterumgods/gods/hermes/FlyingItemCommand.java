@@ -1,4 +1,4 @@
-package me.figgnus.aeterumgods.hermes;
+package me.figgnus.aeterumgods.gods.hermes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

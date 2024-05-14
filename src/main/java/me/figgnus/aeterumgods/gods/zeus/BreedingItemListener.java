@@ -1,4 +1,4 @@
-package me.figgnus.aeterumgods.zeus;
+package me.figgnus.aeterumgods.gods.zeus;
 
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.ChatColor;

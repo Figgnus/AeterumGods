@@ -30,3 +30,6 @@ commands:
   apple:
     description: "Gives player poisoned apple used to tame Hades's horse"
     usage: /<command>
+  levitate:
+    description: "Gives player item that applies levitation to the horse player is sitting on"
+    usage: /<command>

@@ -1,4 +1,4 @@
-package me.figgnus.aeterumgods.poseidon;
+package me.figgnus.aeterumgods.gods.poseidon;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

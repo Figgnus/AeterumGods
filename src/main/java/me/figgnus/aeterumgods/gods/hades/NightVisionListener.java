@@ -1,6 +1,5 @@
-package me.figgnus.aeterumgods.hades;
+package me.figgnus.aeterumgods.gods.hades;
 
-import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
