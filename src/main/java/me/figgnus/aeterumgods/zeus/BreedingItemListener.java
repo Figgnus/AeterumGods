@@ -34,15 +34,17 @@ public class BreedingItemListener implements Listener {
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getInventory().getItemInMainHand();
         UUID playerId = player.getUniqueId();
-        if (!player.hasPermission("aeterumgods.breeding.use")){
-            player.sendMessage(ChatColor.RED + "You can't use this item.");
-            return;
-        }
+        if (itemInHand == null)return;
+        if (itemInHand.getItemMeta() == null)return;
+
         if (itemInHand != null &&
                 itemInHand.hasItemMeta() &&
                 itemInHand.getItemMeta().hasCustomModelData() &&
-                Objects.requireNonNull(itemInHand.getItemMeta()).getCustomModelData() == 103 &&
-                player.hasPermission("aeterumgods.breeding.use")){
+                Objects.requireNonNull(itemInHand.getItemMeta()).getCustomModelData() == 103){
+            if (!player.hasPermission("aeterumgods.breeding.use")){
+                player.sendMessage(ChatColor.RED + "You can't use this item.");
+                return;
+            }
             // Check cooldown
             if (cooldown.containsKey(playerId) && (System.currentTimeMillis() - cooldown.get(playerId)) < COOLDOWN_TIME) {
                 return;

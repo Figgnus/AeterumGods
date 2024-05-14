@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.hermes;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,13 +18,16 @@ public class FlyingItemListener implements Listener {
         // Check if the player is holding the custom item
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
-        if (!(player.hasPermission("aeterumgods.flyingitem.use"))){
-            event.setCancelled(true);
-        }
-        if (player.hasPermission("aeterumgods.flyingitem.use"))
+        if (item == null)return;
+        if (item.getItemMeta() == null)return;
+
         if (item != null && item.getType() == Material.STONE_SWORD &&
                 item.getItemMeta().hasCustomModelData() &&
                 item.getItemMeta().getCustomModelData() == 102) {
+            if (!(player.hasPermission("aeterumgods.flyingitem.use"))){
+                player.sendMessage(ChatColor.RED + "You can't use this item.");
+                return;
+            }
             ItemMeta meta = item.getItemMeta();
             Damageable damageable = (Damageable) meta;
             int currentDamage = damageable.getDamage();

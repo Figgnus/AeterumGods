@@ -24,3 +24,9 @@ commands:
   boots:
     description: "Gives player custom boots"
     usage: /<command>
+  feather:
+    description: "Gives player feather used to tame Poseidon's horse"
+    usage: /<command>
+  apple:
+    description: "Gives player poisoned apple used to tame Hades's horse"
+    usage: /<command>

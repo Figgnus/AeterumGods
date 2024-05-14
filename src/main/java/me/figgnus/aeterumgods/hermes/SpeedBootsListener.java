@@ -31,12 +31,20 @@ public class SpeedBootsListener implements Listener, CommandExecutor {
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
-        if (!player.hasPermission("aeterumgods.speedboots.use")){
-            player.sendMessage(ChatColor.RED + "You can't use this item.");
+        ItemStack boots = player.getInventory().getBoots();
+        if (boots == null){
             return;
         }
-        ItemStack boots = player.getInventory().getBoots();
+        if (boots.getItemMeta() == null){
+            return;
+        }
+
+
         if (boots != null && boots.getItemMeta().getCustomModelData() == 104){
+            if (!(player.hasPermission("aeterumgods.speedboots.use"))){
+                player.sendMessage(ChatColor.RED + "You can't use this item.");
+                return;
+            }
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false));
         }else{
             player.removePotionEffect(PotionEffectType.SPEED);

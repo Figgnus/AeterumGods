@@ -1,32 +1,30 @@
-package me.figgnus.aeterumgods.poseidon;
+package me.figgnus.aeterumgods.hades;
 
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
-
-public class HorseTameListener implements Listener , CommandExecutor {
-    private final String METADATA_KEY = "PoseidonFeed";
+public class ZombieHorseTameListener implements Listener, CommandExecutor {
+    private final String METADATA_KEY = "HadesFeed";
     private final AeterumGods plugin;
     Random random = new Random();
 
-    public HorseTameListener(AeterumGods plugin) {
+    public ZombieHorseTameListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 
@@ -36,7 +34,7 @@ public class HorseTameListener implements Listener , CommandExecutor {
             sender.sendMessage("Only players can perform this action");
         }
         Player player = (Player) sender;
-        if (!player.hasPermission("aeterumgods.poseidontame.admin")){
+        if (!player.hasPermission("aeterumgods.hadestame.admin")){
             player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
         }
         ItemStack customItem = createCustomItem();
@@ -45,11 +43,11 @@ public class HorseTameListener implements Listener , CommandExecutor {
     }
 
     private ItemStack createCustomItem() {
-        ItemStack item = new ItemStack(Material.FEATHER);
+        ItemStack item = new ItemStack(Material.APPLE);
         ItemMeta meta = item.getItemMeta();
         if (meta != null){
-            meta.setDisplayName("Poseidon's Feather");
-            meta.setCustomModelData(105);
+            meta.setDisplayName("Poisoned Apple");
+            meta.setCustomModelData(106);
             item.setItemMeta(meta);
         }
         return item;
@@ -64,12 +62,11 @@ public class HorseTameListener implements Listener , CommandExecutor {
             if (item.getItemMeta() == null)return;
 
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasCustomModelData()
-                    && item.getItemMeta().getCustomModelData() == 105) {
-                if (!player.hasPermission("aeterumgods.poseidontame.use")) {
+                    && item.getItemMeta().getCustomModelData() == 106) {
+                if (!player.hasPermission("aeterumgods.hadestame.use")) {
                     player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
                     return;
                 }
-
                 // Consume one item from the stack
                 // item.setAmount(item.getAmount() - 1);
 
@@ -88,19 +85,27 @@ public class HorseTameListener implements Listener , CommandExecutor {
 
             // Check if the horse has been fed the special item
             if (horse.hasMetadata(METADATA_KEY)) {
+                // Remove the horse
+                Location location = horse.getLocation();
+                horse.remove();
+
+                // Spawn zombie horse at the same location
+                ZombieHorse zombieHorse = (ZombieHorse) horse.getWorld().spawnEntity(location, EntityType.ZOMBIE_HORSE);
+
+                // Apply setting to the zombie horse
                 double speed = random.nextDouble(0.3, 0.3375);
                 double jump = random.nextDouble(0.9, 1.1);
                 int health = random.nextInt(25, 30);
 
                 // Change horse appearance and stats
-                horse.setColor(Horse.Color.WHITE);
-                horse.setOwner(player);
+                zombieHorse.setTamed(true);
+                zombieHorse.setOwner(player);
 
                 // Set horse stats
-                horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed); // Fast speed
-                horse.getAttribute(Attribute.HORSE_JUMP_STRENGTH).setBaseValue(jump); // High jump
-                horse.setMaxHealth(health);
-                horse.setHealth(health);
+                zombieHorse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed); // Fast speed
+                zombieHorse.getAttribute(Attribute.HORSE_JUMP_STRENGTH).setBaseValue(jump); // High jump
+                zombieHorse.setMaxHealth(health);
+                zombieHorse.setHealth(health);
 
                 player.sendMessage("Your horse has transformed!");
 
@@ -108,14 +113,5 @@ public class HorseTameListener implements Listener , CommandExecutor {
                 horse.removeMetadata(METADATA_KEY, plugin);
             }
         }
-    }
-    @EventHandler
-    public void onPlayerItemConsume(PlayerItemConsumeEvent event){
-        Player player = event.getPlayer();
-        if (!player.hasPermission("aeterumgods.poseidontame.use")){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-            return;
-        }
-
     }
 }
