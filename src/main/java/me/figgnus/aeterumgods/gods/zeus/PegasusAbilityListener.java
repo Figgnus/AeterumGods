@@ -1,6 +1,7 @@
 package me.figgnus.aeterumgods.gods.zeus;
 
 import me.figgnus.aeterumgods.AeterumGods;
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -34,13 +35,8 @@ public class PegasusAbilityListener implements Listener, CommandExecutor {
         if (!(player.hasPermission("aeterumgods.zeustame.admin"))){
             player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
         }
-        ItemStack customItem = new ItemStack(Material.POTION);
-        ItemMeta meta = customItem.getItemMeta();
-        meta.setCustomModelData(107);
-        meta.setDisplayName(ChatColor.GREEN + "Levitate Potion");
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        customItem.setItemMeta(meta);
-        player.getInventory().addItem(customItem);
+
+        player.getInventory().addItem(CustomItems.createPegasusAbilityItem());
 
         return true;
     }

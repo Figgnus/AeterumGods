@@ -1,9 +1,9 @@
 package me.figgnus.aeterumgods.gods.hades;
 
 import me.figgnus.aeterumgods.AeterumGods;
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,13 +14,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
 public class ZombieHorseTameListener implements Listener, CommandExecutor {
     private final String METADATA_KEY = "HadesFeed";
+    public static final String LAVA_WALKER = "LavaWalker";
     private final AeterumGods plugin;
     Random random = new Random();
 
@@ -37,21 +37,12 @@ public class ZombieHorseTameListener implements Listener, CommandExecutor {
         if (!player.hasPermission("aeterumgods.hadestame.admin")){
             player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
         }
-        ItemStack customItem = createCustomItem();
+        ItemStack customItem = CustomItems.createHadesTameItem();
         player.getInventory().addItem(customItem);
         return true;
     }
 
-    private ItemStack createCustomItem() {
-        ItemStack item = new ItemStack(Material.APPLE);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Poisoned Apple");
-            meta.setCustomModelData(106);
-            item.setItemMeta(meta);
-        }
-        return item;
-    }
+
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Horse) {
@@ -71,7 +62,9 @@ public class ZombieHorseTameListener implements Listener, CommandExecutor {
                 // item.setAmount(item.getAmount() - 1);
 
                 // Set metadata to indicate the horse has been fed the special item
-                horse.setMetadata(METADATA_KEY, new FixedMetadataValue( plugin,true));
+                plugin.setEntityMetadata(horse, METADATA_KEY, "true");
+
+
 
                 player.sendMessage("The horse has been fed the special item! You can now tame it to transform it.");
             }
@@ -83,8 +76,10 @@ public class ZombieHorseTameListener implements Listener, CommandExecutor {
             Horse horse = (Horse) event.getEntity();
             Player player = (Player) event.getOwner();
 
+            String metadataValue = plugin.getEntityMetadata(horse, METADATA_KEY);
+
             // Check if the horse has been fed the special item
-            if (horse.hasMetadata(METADATA_KEY)) {
+            if ("true".equals(metadataValue)) {
                 // Remove the horse
                 Location location = horse.getLocation();
                 horse.remove();
@@ -107,10 +102,13 @@ public class ZombieHorseTameListener implements Listener, CommandExecutor {
                 zombieHorse.setMaxHealth(health);
                 zombieHorse.setHealth(health);
 
+                // Set metadata to indicate the horse has frost walker ability
+                plugin.setEntityMetadata(zombieHorse, LAVA_WALKER, "true");
+
                 player.sendMessage("Your horse has transformed!");
 
                 // Remove the metadata so it doesn't affect future taming
-                horse.removeMetadata(METADATA_KEY, plugin);
+                //horse.removeMetadata(METADATA_KEY, plugin);
             }
         }
     }

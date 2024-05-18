@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.gods.hermes;
 
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -25,7 +26,7 @@ public class SpeedBootsListener implements Listener, CommandExecutor {
         if (!player.hasPermission("aeterumgods.speedboots.admin")){
             player.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
         }
-        player.getInventory().addItem(createBoots());
+        player.getInventory().addItem(CustomItems.createCustomBoots());
         return true;
     }
     @EventHandler
@@ -49,14 +50,5 @@ public class SpeedBootsListener implements Listener, CommandExecutor {
         }else{
             player.removePotionEffect(PotionEffectType.SPEED);
         }
-    }
-
-    private ItemStack createBoots() {
-        ItemStack boots = new ItemStack(Material.IRON_BOOTS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName("Boots of Speed");
-        meta.setCustomModelData(104);
-        boots.setItemMeta(meta);
-        return boots;
     }
 }

@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.gods.hermes;
 
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,24 +16,11 @@ public class FlyingItemCommand implements CommandExecutor {
 
         if (sender instanceof Player player){
             if (player.hasPermission("aeterumgods.flyingitem.admin")){
-                player.getInventory().addItem(createCustomItem());
+                player.getInventory().addItem(CustomItems.createFlyingItem());
             }else {
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this");
             }
         }
         return true;
-    }
-
-    private ItemStack createCustomItem() {
-        ItemStack customSword = new ItemStack(Material.STONE_SWORD);
-        ItemMeta meta = customSword.getItemMeta();
-
-        // Set custom model data (ensure the number is unique)
-        meta.setCustomModelData(102);
-        meta.setDisplayName(ChatColor.GREEN + "Fly! Forrest Fly!");
-        customSword.setItemMeta(meta);
-
-        // Optional: Add the item to some inventory or give it to players
-        return customSword;
     }
 }

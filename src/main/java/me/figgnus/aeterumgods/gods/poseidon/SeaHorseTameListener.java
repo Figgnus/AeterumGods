@@ -1,8 +1,8 @@
 package me.figgnus.aeterumgods.gods.poseidon;
 
 import me.figgnus.aeterumgods.AeterumGods;
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
@@ -39,21 +37,11 @@ public class SeaHorseTameListener implements Listener , CommandExecutor {
         if (!player.hasPermission("aeterumgods.poseidontame.admin")){
             player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
         }
-        ItemStack customItem = createCustomItem();
+        ItemStack customItem = CustomItems.cretatePoseidonTameItem();
         player.getInventory().addItem(customItem);
         return true;
     }
 
-    private ItemStack createCustomItem() {
-        ItemStack item = new ItemStack(Material.HONEY_BOTTLE);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Poseidon's Potion");
-            meta.setCustomModelData(105);
-            item.setItemMeta(meta);
-        }
-        return item;
-    }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Horse) {
@@ -74,10 +62,9 @@ public class SeaHorseTameListener implements Listener , CommandExecutor {
                 // item.setAmount(item.getAmount() - 1);
 
                 // Set metadata to indicate the horse has been fed the special item
-                horse.setMetadata(METADATA_KEY, new FixedMetadataValue( plugin,true));
+                plugin.setEntityMetadata(horse, METADATA_KEY, "true");
                 // Set metadata to indicate the horse has frost walker ability
-                horse.setMetadata(FROST_WALKER_KEY, new FixedMetadataValue(plugin, true));
-
+                plugin.setEntityMetadata(horse, FROST_WALKER_KEY, "true");
                 player.sendMessage("The horse has been fed the special item! You can now tame it to transform it.");
             }
         }
@@ -88,8 +75,10 @@ public class SeaHorseTameListener implements Listener , CommandExecutor {
             Horse horse = (Horse) event.getEntity();
             Player player = (Player) event.getOwner();
 
+            String metadataValue = plugin.getEntityMetadata(horse, METADATA_KEY);
+
             // Check if the horse has been fed the special item
-            if (horse.hasMetadata(METADATA_KEY)) {
+            if ("true".equals(metadataValue)) {
                 double speed = random.nextDouble(0.3, 0.3375);
                 double jump = random.nextDouble(0.9, 1.1);
                 int health = random.nextInt(25, 30);
@@ -107,7 +96,7 @@ public class SeaHorseTameListener implements Listener , CommandExecutor {
                 player.sendMessage("Your horse has transformed!");
 
                 // Remove the metadata so it doesn't affect future taming
-                horse.removeMetadata(METADATA_KEY, plugin);
+                //horse.removeMetadata(METADATA_KEY, plugin);
             }
         }
     }

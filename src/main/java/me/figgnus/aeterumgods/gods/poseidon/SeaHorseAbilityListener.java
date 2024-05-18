@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class SeaHorseAbilityListener implements Listener {
     private final AeterumGods plugin;
-    private String FROST_WALKER_KEY = SeaHorseTameListener.FROST_WALKER_KEY;
 
     public SeaHorseAbilityListener(AeterumGods plugin) {
         this.plugin = plugin;
@@ -24,9 +23,10 @@ public class SeaHorseAbilityListener implements Listener {
         // Check if the player is riding a horse
         if (player.isInsideVehicle() && player.getVehicle() instanceof Horse) {
             Horse horse = (Horse) player.getVehicle();
+            String metadataValue = plugin.getEntityMetadata(horse, SeaHorseTameListener.FROST_WALKER_KEY);
 
             // Check if the horse has the Frost Walker ability
-            if (horse.hasMetadata(FROST_WALKER_KEY)) {
+            if ("true".equals(metadataValue)) {
                 // Get the block under the horse
                 Block blockUnder = horse.getLocation().subtract(0, 1, 0).getBlock();
 

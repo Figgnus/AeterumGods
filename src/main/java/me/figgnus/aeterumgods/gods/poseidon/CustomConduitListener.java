@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.gods.poseidon;
 
+import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -60,16 +61,9 @@ public class CustomConduitListener implements Listener, CommandExecutor {
         if (!player.hasPermission("aeterumgods.conduit.admin")){
             player.sendMessage(ChatColor.RED + "You don't have permission use this command.");
         }
-        player.getInventory().addItem(createCustomBlock());
+        player.getInventory().addItem(CustomItems.createCustomConduit());
         return true;
     }
 
-    private ItemStack createCustomBlock() {
-        ItemStack conduit = new ItemStack(Material.CONDUIT);
-        ItemMeta meta = conduit.getItemMeta();
-        meta.setCustomModelData(101);
-        meta.setDisplayName("Mini Conduit");
-        conduit.setItemMeta(meta);
-        return conduit;
-    }
+
 }
