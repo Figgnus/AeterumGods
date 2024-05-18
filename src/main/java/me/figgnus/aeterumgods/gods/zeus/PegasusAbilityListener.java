@@ -1,4 +1,4 @@
-package me.figgnus.aeterumgods.gods.poseidon;
+package me.figgnus.aeterumgods.gods.zeus;
 
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.ChatColor;
@@ -18,10 +18,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class HorseAbilityListener implements Listener, CommandExecutor {
+public class PegasusAbilityListener implements Listener, CommandExecutor {
     private final AeterumGods plugin;
 
-    public HorseAbilityListener(AeterumGods plugin) {
+    public PegasusAbilityListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 
@@ -31,13 +31,13 @@ public class HorseAbilityListener implements Listener, CommandExecutor {
             sender.sendMessage("Only players can use this command.");
         }
         Player player = (Player) sender;
-        if (!(player.hasPermission("aeterumgods.poseidontame.admin"))){
+        if (!(player.hasPermission("aeterumgods.zeustame.admin"))){
             player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
         }
         ItemStack customItem = new ItemStack(Material.POTION);
         ItemMeta meta = customItem.getItemMeta();
         meta.setCustomModelData(107);
-        meta.setDisplayName(ChatColor.GREEN + "Boost Feather");
+        meta.setDisplayName(ChatColor.GREEN + "Levitate Potion");
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         customItem.setItemMeta(meta);
         player.getInventory().addItem(customItem);
@@ -51,7 +51,7 @@ public class HorseAbilityListener implements Listener, CommandExecutor {
         if (item.getItemMeta() == null)return;
 
         if (item.getType() == Material.POTION && player.isInsideVehicle() && player.getVehicle() instanceof Horse && item.getItemMeta().getCustomModelData() == 107) {
-            if (!player.hasPermission("aeterumgods.poseidontame.use")){
+            if (!player.hasPermission("aeterumgods.zeustame.use")){
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
                 return;
             }

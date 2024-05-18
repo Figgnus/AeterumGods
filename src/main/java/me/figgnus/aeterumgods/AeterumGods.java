@@ -7,10 +7,12 @@ import me.figgnus.aeterumgods.gods.hermes.FlyingItemListener;
 import me.figgnus.aeterumgods.gods.hermes.SpeedBootsListener;
 import me.figgnus.aeterumgods.gods.poseidon.CustomConduitListener;
 import me.figgnus.aeterumgods.gods.poseidon.DolphinGraceListener;
-import me.figgnus.aeterumgods.gods.poseidon.HorseAbilityListener;
-import me.figgnus.aeterumgods.gods.poseidon.HorseTameListener;
+import me.figgnus.aeterumgods.gods.poseidon.SeaHorseAbilityListener;
+import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
+import me.figgnus.aeterumgods.gods.poseidon.SeaHorseTameListener;
 import me.figgnus.aeterumgods.gods.zeus.BreedingItemCommand;
 import me.figgnus.aeterumgods.gods.zeus.BreedingItemListener;
+import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
 import me.figgnus.aeterumgods.utils.LevitationListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,21 +23,26 @@ public final class AeterumGods extends JavaPlugin {
         DolphinGraceListener dolphinGraceListener = new DolphinGraceListener();
         NightVisionListener nightVisionListener = new NightVisionListener();
         CustomConduitListener customConduitListener = new CustomConduitListener();
-        HorseTameListener horseTameListener = new HorseTameListener(this);
+        SeaHorseTameListener seaHorseListener = new SeaHorseTameListener(this);
+        SeaHorseAbilityListener seaHorseAbilityListener = new SeaHorseAbilityListener(this);
         ZombieHorseTameListener zombieHorseTameListener = new ZombieHorseTameListener(this);
-        HorseAbilityListener horseAbilityListener = new HorseAbilityListener(this);
+        PegasusTameListener pegasusTameListener = new PegasusTameListener(this);
+        PegasusAbilityListener pegasusAbilityListener = new PegasusAbilityListener(this);
         LevitationListener levitationListener = new LevitationListener(this);
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(new BreedingItemListener(this),this);
         getServer().getPluginManager().registerEvents(new FlyingItemListener(),this);
         getServer().getPluginManager().registerEvents(dolphinGraceListener, this);
-        getServer().getPluginManager().registerEvents(horseTameListener, this);
+        getServer().getPluginManager().registerEvents(seaHorseListener, this);
         //getServer().getPluginManager().registerEvents(customConduitListener, this);
         getServer().getPluginManager().registerEvents(new SpeedBootsListener(), this);
         getServer().getPluginManager().registerEvents(zombieHorseTameListener, this);
-        getServer().getPluginManager().registerEvents(horseAbilityListener, this);
+        getServer().getPluginManager().registerEvents(pegasusAbilityListener, this);
         getServer().getPluginManager().registerEvents(levitationListener, this);
+        getServer().getPluginManager().registerEvents(pegasusTameListener, this);
+        getServer().getPluginManager().registerEvents(seaHorseAbilityListener, this);
+
 
         getCommand("nightvision").setExecutor(nightVisionListener);
         getCommand("breeding").setExecutor(new BreedingItemCommand());
@@ -43,9 +50,10 @@ public final class AeterumGods extends JavaPlugin {
         getCommand("dolphingrace").setExecutor(dolphinGraceListener);
         //getCommand("conduit").setExecutor(customConduitListener);
         getCommand("boots").setExecutor(new SpeedBootsListener());
-        getCommand("feather").setExecutor(horseTameListener);
+        getCommand("seapotion").setExecutor(seaHorseListener);
+        getCommand("feather").setExecutor(pegasusTameListener);
         getCommand("apple").setExecutor(zombieHorseTameListener);
-        getCommand("levitate").setExecutor(horseAbilityListener);
+        getCommand("levitate").setExecutor(pegasusAbilityListener);
     }
     @Override
     public void onDisable() {

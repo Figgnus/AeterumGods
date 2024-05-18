@@ -25,7 +25,7 @@ commands:
     description: "Gives player custom boots"
     usage: /<command>
   feather:
-    description: "Gives player feather used to tame Poseidon's horse"
+    description: "Gives player feather used to tame Zeus's horse"
     usage: /<command>
   apple:
     description: "Gives player poisoned apple used to tame Hades's horse"
@@ -33,3 +33,7 @@ commands:
   levitate:
     description: "Gives player item that applies levitation to the horse player is sitting on"
     usage: /<command>
+  seapotion:
+    description: "Gives player potion used to tame Poseidon's horse"
+    usage: /<command>
+

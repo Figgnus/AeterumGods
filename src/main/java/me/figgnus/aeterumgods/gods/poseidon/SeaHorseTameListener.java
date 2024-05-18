@@ -20,12 +20,13 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.Random;
 
 
-public class HorseTameListener implements Listener , CommandExecutor {
+public class SeaHorseTameListener implements Listener , CommandExecutor {
     private final String METADATA_KEY = "PoseidonFeed";
+    public static final String FROST_WALKER_KEY = "FrostWalker";
     private final AeterumGods plugin;
     Random random = new Random();
 
-    public HorseTameListener(AeterumGods plugin) {
+    public SeaHorseTameListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 
@@ -44,10 +45,10 @@ public class HorseTameListener implements Listener , CommandExecutor {
     }
 
     private ItemStack createCustomItem() {
-        ItemStack item = new ItemStack(Material.FEATHER);
+        ItemStack item = new ItemStack(Material.HONEY_BOTTLE);
         ItemMeta meta = item.getItemMeta();
         if (meta != null){
-            meta.setDisplayName("Poseidon's Feather");
+            meta.setDisplayName("Poseidon's Potion");
             meta.setCustomModelData(105);
             item.setItemMeta(meta);
         }
@@ -74,6 +75,8 @@ public class HorseTameListener implements Listener , CommandExecutor {
 
                 // Set metadata to indicate the horse has been fed the special item
                 horse.setMetadata(METADATA_KEY, new FixedMetadataValue( plugin,true));
+                // Set metadata to indicate the horse has frost walker ability
+                horse.setMetadata(FROST_WALKER_KEY, new FixedMetadataValue(plugin, true));
 
                 player.sendMessage("The horse has been fed the special item! You can now tame it to transform it.");
             }
@@ -92,7 +95,7 @@ public class HorseTameListener implements Listener , CommandExecutor {
                 int health = random.nextInt(25, 30);
 
                 // Change horse appearance and stats
-                horse.setColor(Horse.Color.WHITE);
+                horse.setColor(Horse.Color.BLACK);
                 horse.setOwner(player);
 
                 // Set horse stats
