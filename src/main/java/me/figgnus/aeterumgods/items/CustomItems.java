@@ -129,4 +129,15 @@ public class CustomItems {
 
         return item;
     }
+    // Item for speed horse ability
+    public static ItemStack createSpeedHorseAbilityItem(){
+        ItemStack item = new ItemStack(Material.POTION);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(112);
+        meta.setDisplayName(ChatColor.GREEN + "Horse Speed Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
+        return item;
+    }
 }

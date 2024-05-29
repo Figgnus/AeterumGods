@@ -7,6 +7,8 @@ import me.figgnus.aeterumgods.gods.hades.ZombieHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseTameListener;
 import me.figgnus.aeterumgods.gods.hermes.FlyingItemListener;
 import me.figgnus.aeterumgods.gods.hermes.SpeedBootsListener;
+import me.figgnus.aeterumgods.gods.hermes.SpeedHorseAbilityListener;
+import me.figgnus.aeterumgods.gods.hermes.SpeedHorseTameListener;
 import me.figgnus.aeterumgods.gods.poseidon.DolphinGraceListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
@@ -26,7 +28,6 @@ public final class AeterumGods extends JavaPlugin {
     public void onEnable() {
         DolphinGraceListener dolphinGraceListener = new DolphinGraceListener();
         NightVisionListener nightVisionListener = new NightVisionListener();
-        //CustomConduitListener customConduitListener = new CustomConduitListener();
         SeaHorseTameListener seaHorseListener = new SeaHorseTameListener(this);
         SeaHorseAbilityListener seaHorseAbilityListener = new SeaHorseAbilityListener(this);
         ZombieHorseTameListener zombieHorseTameListener = new ZombieHorseTameListener(this);
@@ -36,14 +37,18 @@ public final class AeterumGods extends JavaPlugin {
         ZombieHorseAbilityListener zombieHorseAbilityListener = new ZombieHorseAbilityListener(this);
         FlowerHorseTameListener flowerHorseTameListener = new FlowerHorseTameListener(this);
         FlowerHorseAbilityListener flowerHorseAbilityListener = new FlowerHorseAbilityListener(this);
+        BreedingItemListener breedingItemListener = new BreedingItemListener(this);
+        FlyingItemListener flyingItemListener = new FlyingItemListener();
+        SpeedBootsListener speedBootsListener = new SpeedBootsListener();
+        SpeedHorseTameListener speedHorseTameListener = new SpeedHorseTameListener(this);
+        SpeedHorseAbilityListener speedHorseAbilityListener = new SpeedHorseAbilityListener(this);
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
-        getServer().getPluginManager().registerEvents(new BreedingItemListener(this),this);
-        getServer().getPluginManager().registerEvents(new FlyingItemListener(),this);
+        getServer().getPluginManager().registerEvents(breedingItemListener,this);
+        getServer().getPluginManager().registerEvents(flyingItemListener,this);
         getServer().getPluginManager().registerEvents(dolphinGraceListener, this);
         getServer().getPluginManager().registerEvents(seaHorseListener, this);
-        //getServer().getPluginManager().registerEvents(customConduitListener, this);
-        getServer().getPluginManager().registerEvents(new SpeedBootsListener(), this);
+        getServer().getPluginManager().registerEvents(speedBootsListener, this);
         getServer().getPluginManager().registerEvents(zombieHorseTameListener, this);
         getServer().getPluginManager().registerEvents(pegasusAbilityListener, this);
         getServer().getPluginManager().registerEvents(levitationListener, this);
@@ -52,17 +57,17 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(zombieHorseAbilityListener, this);
         getServer().getPluginManager().registerEvents(flowerHorseTameListener, this);
         getServer().getPluginManager().registerEvents(flowerHorseAbilityListener, this);
+        getServer().getPluginManager().registerEvents(speedHorseTameListener, this);
+        getServer().getPluginManager().registerEvents(speedHorseAbilityListener, this);
 
-        // tab completer for taming horses
+        // tab completers
         getCommand("tame").setTabCompleter(new TameCommandTabCompleter());
-        // tab completer for items
         getCommand("ag").setTabCompleter(new ItemCommandTabCompleter());
 
         getCommand("tame").setExecutor(new TameCommandExecutor());
         getCommand("ag").setExecutor(new ItemCommandExecutor());
         getCommand("nightvision").setExecutor(nightVisionListener);
         getCommand("dolphingrace").setExecutor(dolphinGraceListener);
-        //getCommand("conduit").setExecutor(customConduitListener);
 
     }
     @Override

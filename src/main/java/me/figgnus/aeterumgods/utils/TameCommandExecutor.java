@@ -40,6 +40,10 @@ public class TameCommandExecutor implements CommandExecutor {
                 break;
             case "zeuslevitate":
                 player.getInventory().addItem(CustomItems.createPegasusAbilityItem());
+                break;
+            case "hermesspeed":
+                player.getInventory().addItem(CustomItems.createSpeedHorseAbilityItem());
+                break;
             default:
                 player.sendMessage("Unknown god: " + godName);
                 break;

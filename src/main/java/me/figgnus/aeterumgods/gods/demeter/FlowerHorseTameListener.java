@@ -34,7 +34,7 @@ public class FlowerHorseTameListener implements Listener {
 
             if (item != null && item.hasItemMeta() && item.getItemMeta().hasCustomModelData()
                     && item.getItemMeta().getCustomModelData() == 109) {
-                if (!player.hasPermission("aeterumgods.demeter.use")) {
+                if (!player.hasPermission("aeterumgods.demetertame.use")) {
                     player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
                     return;
                 }
