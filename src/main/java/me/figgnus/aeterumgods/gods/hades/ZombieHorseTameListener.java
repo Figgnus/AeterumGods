@@ -1,24 +1,19 @@
 package me.figgnus.aeterumgods.gods.hades;
 
 import me.figgnus.aeterumgods.AeterumGods;
-import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
-public class ZombieHorseTameListener implements Listener, CommandExecutor {
+public class ZombieHorseTameListener implements Listener {
     private final String METADATA_KEY = "HadesFeed";
     public static final String LAVA_WALKER = "LavaWalker";
     private final AeterumGods plugin;
@@ -27,21 +22,6 @@ public class ZombieHorseTameListener implements Listener, CommandExecutor {
     public ZombieHorseTameListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can perform this action");
-        }
-        Player player = (Player) sender;
-        if (!player.hasPermission("aeterumgods.hadestame.admin")){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-        }
-        ItemStack customItem = CustomItems.createHadesTameItem();
-        player.getInventory().addItem(customItem);
-        return true;
-    }
-
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {

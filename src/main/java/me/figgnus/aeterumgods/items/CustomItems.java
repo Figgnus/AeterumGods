@@ -54,24 +54,24 @@ public class CustomItems {
     }
     // Item for taming Poseidon horse
     public static ItemStack cretatePoseidonTameItem() {
-        ItemStack item = new ItemStack(Material.HONEY_BOTTLE);
+        ItemStack item = new ItemStack(Material.POTION);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Poseidon's Potion");
-            meta.setCustomModelData(105);
-            item.setItemMeta(meta);
-        }
+        meta.setCustomModelData(105);
+        meta.setDisplayName(ChatColor.GREEN + "Poseidon's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
         return item;
     }
     // Item for taming Hades horse
     public static ItemStack createHadesTameItem() {
-        ItemStack item = new ItemStack(Material.APPLE);
+        ItemStack item = new ItemStack(Material.POTION);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Poisoned Apple");
-            meta.setCustomModelData(106);
-            item.setItemMeta(meta);
-        }
+        meta.setCustomModelData(106);
+        meta.setDisplayName(ChatColor.GREEN + "Hades's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
         return item;
     }
     // Item for using Pegasus ability
@@ -87,24 +87,46 @@ public class CustomItems {
     }
     // Item for taming Zeus horse
     public static ItemStack createZeusTameItem() {
-        ItemStack item = new ItemStack(Material.FEATHER);
+        ItemStack item = new ItemStack(Material.POTION);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Zeus's Feather");
-            meta.setCustomModelData(108);
-            item.setItemMeta(meta);
-        }
+        meta.setCustomModelData(108);
+        meta.setDisplayName(ChatColor.GREEN + "Zeus's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
         return item;
     }
     // Item for taming Demeter horse
     public static ItemStack createDemeterTameItem(){
-        ItemStack item = new ItemStack(Material.WHEAT);
+        ItemStack item = new ItemStack(Material.POTION);
         ItemMeta meta = item.getItemMeta();
-        if (meta != null){
-            meta.setDisplayName("Demeter's Crop");
-            meta.setCustomModelData(109);
-            item.setItemMeta(meta);
-        }
+        meta.setCustomModelData(109);
+        meta.setDisplayName(ChatColor.GREEN + "Demeter's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
+        return item;
+    }
+    // Item for taming Hermes horse
+    public static ItemStack createHermesTameItem(){
+        ItemStack item = new ItemStack(Material.POTION);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(110);
+        meta.setDisplayName(ChatColor.GREEN + "Hermes's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
+        return item;
+    }
+    // Item for taming Dionysus horse
+    public static ItemStack createDionysusTameItem(){
+        ItemStack item = new ItemStack(Material.POTION);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(111);
+        meta.setDisplayName(ChatColor.GREEN + "Dionysus's Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
         return item;
     }
 }

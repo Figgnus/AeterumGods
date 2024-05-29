@@ -1,12 +1,8 @@
 package me.figgnus.aeterumgods.gods.zeus;
 
 import me.figgnus.aeterumgods.AeterumGods;
-import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,31 +10,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Random;
 
-public class PegasusTameListener implements Listener, CommandExecutor {
+public class PegasusTameListener implements Listener {
     private final String METADATA_KEY = "ZeusFeed";
+    public static final String LEVITATE_KEY = "Levitate";
     private final AeterumGods plugin;
     Random random = new Random();
 
     public PegasusTameListener(AeterumGods plugin) {
         this.plugin = plugin;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can perform this action");
-        }
-        Player player = (Player) sender;
-        if (!player.hasPermission("aeterumgods.zeustame.admin")){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-        }
-        ItemStack customItem = CustomItems.createZeusTameItem();
-        player.getInventory().addItem(customItem);
-        return true;
     }
 
     @EventHandler
@@ -62,6 +44,7 @@ public class PegasusTameListener implements Listener, CommandExecutor {
 
                 // Set metadata to indicate the horse has been fed the special item
                 plugin.setEntityMetadata(horse, METADATA_KEY, "true");
+                plugin.setEntityMetadata(horse, LEVITATE_KEY, "true");
 
                 player.sendMessage("The horse has been fed the special item! You can now tame it to transform it.");
             }

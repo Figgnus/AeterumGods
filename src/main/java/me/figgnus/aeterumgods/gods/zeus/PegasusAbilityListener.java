@@ -19,31 +19,18 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class PegasusAbilityListener implements Listener, CommandExecutor {
+public class PegasusAbilityListener implements Listener {
     private final AeterumGods plugin;
 
     public PegasusAbilityListener(AeterumGods plugin) {
         this.plugin = plugin;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can use this command.");
-        }
-        Player player = (Player) sender;
-        if (!(player.hasPermission("aeterumgods.zeustame.admin"))){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-        }
-
-        player.getInventory().addItem(CustomItems.createPegasusAbilityItem());
-
-        return true;
-    }
     @EventHandler
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
+
         if (item.getItemMeta() == null)return;
 
         if (item.getType() == Material.POTION && player.isInsideVehicle() && player.getVehicle() instanceof Horse && item.getItemMeta().getCustomModelData() == 107) {
@@ -52,24 +39,26 @@ public class PegasusAbilityListener implements Listener, CommandExecutor {
                 return;
             }
             Horse horse = (Horse) player.getVehicle();
+            String metadataValue = plugin.getEntityMetadata(horse, PegasusTameListener.LEVITATE_KEY);
+            if ("true".equals(metadataValue)){
+                // Apply levitation effect to the horse
+                horse.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 1)); // 100 ticks = 5 seconds
+                player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 1)); // 100 ticks = 5 seconds
 
-            // Apply levitation effect to the horse
-            horse.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 1)); // 100 ticks = 5 seconds
-            player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 1)); // 100 ticks = 5 seconds
+                // Schedule a task to apply Slow Falling after Levitation ends
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        // Check if the horse still has the levitation effect
+                        if (!horse.hasPotionEffect(PotionEffectType.LEVITATION)) {
+                            // Apply Slow Falling effect to the horse
+                            horse.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 1)); // 200 ticks = 10 seconds
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 1));
 
-            // Schedule a task to apply Slow Falling after Levitation ends
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    // Check if the horse still has the levitation effect
-                    if (!horse.hasPotionEffect(PotionEffectType.LEVITATION)) {
-                        // Apply Slow Falling effect to the horse
-                        horse.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 1)); // 200 ticks = 10 seconds
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 1));
-
+                        }
                     }
-                }
-            }.runTaskLater(plugin, getRemainingLevitationDuration(player) + 1); // 100 ticks = 5 seconds (same as Levitation duration)
+                }.runTaskLater(plugin, getRemainingLevitationDuration(player) + 1); // 100 ticks = 5 seconds (same as Levitation duration)
+            }
         }
     }
     private long getRemainingLevitationDuration(Player player) {

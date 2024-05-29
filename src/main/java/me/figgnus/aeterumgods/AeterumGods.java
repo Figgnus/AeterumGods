@@ -5,17 +5,15 @@ import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
 import me.figgnus.aeterumgods.gods.hades.NightVisionListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseTameListener;
-import me.figgnus.aeterumgods.gods.hermes.FlyingItemCommand;
 import me.figgnus.aeterumgods.gods.hermes.FlyingItemListener;
 import me.figgnus.aeterumgods.gods.hermes.SpeedBootsListener;
 import me.figgnus.aeterumgods.gods.poseidon.DolphinGraceListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseTameListener;
-import me.figgnus.aeterumgods.gods.zeus.BreedingItemCommand;
 import me.figgnus.aeterumgods.gods.zeus.BreedingItemListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
-import me.figgnus.aeterumgods.utils.LevitationListener;
+import me.figgnus.aeterumgods.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -55,18 +53,17 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(flowerHorseTameListener, this);
         getServer().getPluginManager().registerEvents(flowerHorseAbilityListener, this);
 
+        // tab completer for taming horses
+        getCommand("tame").setTabCompleter(new TameCommandTabCompleter());
+        // tab completer for items
+        getCommand("ag").setTabCompleter(new ItemCommandTabCompleter());
 
+        getCommand("tame").setExecutor(new TameCommandExecutor());
+        getCommand("ag").setExecutor(new ItemCommandExecutor());
         getCommand("nightvision").setExecutor(nightVisionListener);
-        getCommand("breeding").setExecutor(new BreedingItemCommand());
-        getCommand("flying").setExecutor(new FlyingItemCommand());
         getCommand("dolphingrace").setExecutor(dolphinGraceListener);
         //getCommand("conduit").setExecutor(customConduitListener);
-        getCommand("boots").setExecutor(new SpeedBootsListener());
-        getCommand("seapotion").setExecutor(seaHorseListener);
-        getCommand("feather").setExecutor(pegasusTameListener);
-        getCommand("apple").setExecutor(zombieHorseTameListener);
-        getCommand("levitate").setExecutor(pegasusAbilityListener);
-        getCommand("plant").setExecutor(flowerHorseTameListener);
+
     }
     @Override
     public void onDisable() {

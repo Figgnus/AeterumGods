@@ -3,40 +3,22 @@ version: '${project.version}'
 main: me.figgnus.aeterumgods.AeterumGods
 api-version: '1.20'
 commands:
+  tame:
+    description: "Gives player a specific item to tame a horse"
+    usage: /tame <item>
+    permission: aeterumgods.tame.admin
+    permission-message: "You don't have permission to use this command."
+  ag:
+    description: "Gives player a specific item"
+    usage: /ag <item>
+    permission: aeterumgods.item.admin
+    permission-message: "You don't have permission to use this command."
   nightvision:
     description: "Gives player with permission ability to toggle night vision"
-    usage: /<command>
-  breeding:
-    description: "Gives player consumable item that allows player to breed animals while having access to just one"
-    usage: /<command>
-  flying:
-    description: "Gives player item that allows player to propel himself like using rockets"
-    usage: /<command>
-  trident:
-    description: "Gives player trident"
     usage: /<command>
   dolphingrace:
     description: "Toggles dolphin's grace effect"
     usage: /<command>
-  conduit:
-    description: "Gives player custom conduit"
-    usage: /<command>
-  boots:
-    description: "Gives player custom boots"
-    usage: /<command>
-  feather:
-    description: "Gives player feather used to tame Zeus's horse"
-    usage: /<command>
-  apple:
-    description: "Gives player poisoned apple used to tame Hades's horse"
-    usage: /<command>
-  levitate:
-    description: "Gives player item that applies levitation to the horse player is sitting on"
-    usage: /<command>
-  seapotion:
-    description: "Gives player potion used to tame Poseidon's horse"
-    usage: /<command>
-  plant:
-    description: "Gives player item used to tame Demeter Horse"
-    usage: /<command>
+
+
 

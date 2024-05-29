@@ -1,12 +1,9 @@
 package me.figgnus.aeterumgods.gods.poseidon;
 
 import me.figgnus.aeterumgods.AeterumGods;
-import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,10 +12,13 @@ import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
-public class SeaHorseTameListener implements Listener , CommandExecutor {
+public class SeaHorseTameListener implements Listener  {
+    private final Map<String, String> availableItems = new HashMap<>();
     private final String METADATA_KEY = "PoseidonFeed";
     public static final String FROST_WALKER_KEY = "FrostWalker";
     private final AeterumGods plugin;
@@ -26,20 +26,7 @@ public class SeaHorseTameListener implements Listener , CommandExecutor {
 
     public SeaHorseTameListener(AeterumGods plugin) {
         this.plugin = plugin;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can perform this action");
-        }
-        Player player = (Player) sender;
-        if (!player.hasPermission("aeterumgods.poseidontame.admin")){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-        }
-        ItemStack customItem = CustomItems.cretatePoseidonTameItem();
-        player.getInventory().addItem(customItem);
-        return true;
+        availableItems.put("poseidon", "true");
     }
 
     @EventHandler

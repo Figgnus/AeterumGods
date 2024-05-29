@@ -1,12 +1,8 @@
 package me.figgnus.aeterumgods.gods.demeter;
 
 import me.figgnus.aeterumgods.AeterumGods;
-import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class FlowerHorseTameListener implements Listener, CommandExecutor {
+public class FlowerHorseTameListener implements Listener {
     private final AeterumGods plugin;
     private final String METADATA_KEY = "DemeterFeed";
     public static final String SEED_KEY = "Seed";
@@ -27,19 +23,6 @@ public class FlowerHorseTameListener implements Listener, CommandExecutor {
         this.plugin = plugin;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can use this command");
-        }
-        Player player = (Player) sender;
-        if (!player.hasPermission("aeterumgods.demeter.admin")){
-            player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
-        }
-        ItemStack tameItem = CustomItems.createDemeterTameItem();
-        player.getInventory().addItem(tameItem);
-        return true;
-    }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Horse) {
