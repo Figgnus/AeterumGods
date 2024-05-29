@@ -36,4 +36,7 @@ commands:
   seapotion:
     description: "Gives player potion used to tame Poseidon's horse"
     usage: /<command>
+  plant:
+    description: "Gives player item used to tame Demeter Horse"
+    usage: /<command>
 

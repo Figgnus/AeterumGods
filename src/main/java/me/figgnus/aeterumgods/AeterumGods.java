@@ -1,12 +1,13 @@
 package me.figgnus.aeterumgods;
 
+import me.figgnus.aeterumgods.gods.demeter.FlowerHorseAbilityListener;
+import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
 import me.figgnus.aeterumgods.gods.hades.NightVisionListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseTameListener;
 import me.figgnus.aeterumgods.gods.hermes.FlyingItemCommand;
 import me.figgnus.aeterumgods.gods.hermes.FlyingItemListener;
 import me.figgnus.aeterumgods.gods.hermes.SpeedBootsListener;
-import me.figgnus.aeterumgods.gods.poseidon.CustomConduitListener;
 import me.figgnus.aeterumgods.gods.poseidon.DolphinGraceListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
@@ -35,6 +36,8 @@ public final class AeterumGods extends JavaPlugin {
         PegasusAbilityListener pegasusAbilityListener = new PegasusAbilityListener(this);
         LevitationListener levitationListener = new LevitationListener(this);
         ZombieHorseAbilityListener zombieHorseAbilityListener = new ZombieHorseAbilityListener(this);
+        FlowerHorseTameListener flowerHorseTameListener = new FlowerHorseTameListener(this);
+        FlowerHorseAbilityListener flowerHorseAbilityListener = new FlowerHorseAbilityListener(this);
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(new BreedingItemListener(this),this);
@@ -49,6 +52,8 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(pegasusTameListener, this);
         getServer().getPluginManager().registerEvents(seaHorseAbilityListener, this);
         getServer().getPluginManager().registerEvents(zombieHorseAbilityListener, this);
+        getServer().getPluginManager().registerEvents(flowerHorseTameListener, this);
+        getServer().getPluginManager().registerEvents(flowerHorseAbilityListener, this);
 
 
         getCommand("nightvision").setExecutor(nightVisionListener);
@@ -61,11 +66,14 @@ public final class AeterumGods extends JavaPlugin {
         getCommand("feather").setExecutor(pegasusTameListener);
         getCommand("apple").setExecutor(zombieHorseTameListener);
         getCommand("levitate").setExecutor(pegasusAbilityListener);
+        getCommand("plant").setExecutor(flowerHorseTameListener);
     }
     @Override
     public void onDisable() {
         // Plugin shutdown logic
     }
+
+    //methods for making metadata of entities persistent
     public void setEntityMetadata(Entity entity, String key, String value){
         NamespacedKey namespacedKey = new NamespacedKey(this, key);
         PersistentDataContainer dataContainer = entity.getPersistentDataContainer();

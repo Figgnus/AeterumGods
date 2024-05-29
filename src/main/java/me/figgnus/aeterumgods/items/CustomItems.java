@@ -96,4 +96,15 @@ public class CustomItems {
         }
         return item;
     }
+    // Item for taming Demeter horse
+    public static ItemStack createDemeterTameItem(){
+        ItemStack item = new ItemStack(Material.WHEAT);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null){
+            meta.setDisplayName("Demeter's Crop");
+            meta.setCustomModelData(109);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
 }
