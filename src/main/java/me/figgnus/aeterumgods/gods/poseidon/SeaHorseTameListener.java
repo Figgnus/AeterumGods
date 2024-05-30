@@ -18,7 +18,6 @@ import java.util.Random;
 
 
 public class SeaHorseTameListener implements Listener  {
-    private final Map<String, String> availableItems = new HashMap<>();
     private final String METADATA_KEY = "PoseidonFeed";
     public static final String FROST_WALKER_KEY = "FrostWalker";
     private final AeterumGods plugin;
@@ -26,7 +25,6 @@ public class SeaHorseTameListener implements Listener  {
 
     public SeaHorseTameListener(AeterumGods plugin) {
         this.plugin = plugin;
-        availableItems.put("poseidon", "true");
     }
 
     @EventHandler

@@ -2,6 +2,7 @@ name: AeterumGods
 version: '${project.version}'
 main: me.figgnus.aeterumgods.AeterumGods
 api-version: '1.20'
+softdepend: [Brewery]
 commands:
   tame:
     description: "Gives player a specific item to tame a horse"

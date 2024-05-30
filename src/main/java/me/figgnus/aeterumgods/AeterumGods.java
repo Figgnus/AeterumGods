@@ -1,7 +1,10 @@
 package me.figgnus.aeterumgods;
 
+import com.dre.brewery.BPlayer;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
+import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseAbilityListener;
+import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseTameListener;
 import me.figgnus.aeterumgods.gods.hades.NightVisionListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.hades.ZombieHorseTameListener;
@@ -18,6 +21,7 @@ import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
 import me.figgnus.aeterumgods.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +46,8 @@ public final class AeterumGods extends JavaPlugin {
         SpeedBootsListener speedBootsListener = new SpeedBootsListener();
         SpeedHorseTameListener speedHorseTameListener = new SpeedHorseTameListener(this);
         SpeedHorseAbilityListener speedHorseAbilityListener = new SpeedHorseAbilityListener(this);
+        DrunkHorseTameListener drunkHorseTameListener = new DrunkHorseTameListener(this);
+        DrunkHorseAbilityListener drunkHorseAbilityListener = new DrunkHorseAbilityListener(this);
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(breedingItemListener,this);
@@ -59,12 +65,14 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(flowerHorseAbilityListener, this);
         getServer().getPluginManager().registerEvents(speedHorseTameListener, this);
         getServer().getPluginManager().registerEvents(speedHorseAbilityListener, this);
+        getServer().getPluginManager().registerEvents(drunkHorseTameListener, this);
+        getServer().getPluginManager().registerEvents(drunkHorseAbilityListener, this);
 
         // tab completers
         getCommand("tame").setTabCompleter(new TameCommandTabCompleter());
         getCommand("ag").setTabCompleter(new ItemCommandTabCompleter());
 
-        getCommand("tame").setExecutor(new TameCommandExecutor());
+        getCommand("tame").setExecutor(new TameCommandExecutor(this));
         getCommand("ag").setExecutor(new ItemCommandExecutor());
         getCommand("nightvision").setExecutor(nightVisionListener);
         getCommand("dolphingrace").setExecutor(dolphinGraceListener);
@@ -88,5 +96,9 @@ public final class AeterumGods extends JavaPlugin {
             return dataContainer.get(namespacedKey, PersistentDataType.STRING);
         }
         return null;
+    }
+    public int getDrunkennessLevel(Player player){
+        BPlayer bPlayer = BPlayer.get(player);
+        return bPlayer.getDrunkeness();
     }
 }

@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.utils;
 
+import me.figgnus.aeterumgods.AeterumGods;
 import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,6 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class TameCommandExecutor implements CommandExecutor {
+    private final AeterumGods plugin;
+
+    public TameCommandExecutor(AeterumGods plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)){
@@ -43,6 +50,9 @@ public class TameCommandExecutor implements CommandExecutor {
                 break;
             case "hermesspeed":
                 player.getInventory().addItem(CustomItems.createSpeedHorseAbilityItem());
+                break;
+            case "dlevel":
+                player.sendMessage("Your drunkenness level is " + plugin.getDrunkennessLevel(player));
                 break;
             default:
                 player.sendMessage("Unknown god: " + godName);
