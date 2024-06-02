@@ -29,8 +29,14 @@ public class ItemCommandExecutor implements CommandExecutor {
             case "boots":
                 player.getInventory().addItem(CustomItems.createCustomBoots());
                 break;
+            case "zeuslevitate":
+                player.getInventory().addItem(CustomItems.createPegasusAbilityItem());
+                break;
+            case "hermesspeed":
+                player.getInventory().addItem(CustomItems.createSpeedHorseAbilityItem());
+                break;
             default:
-                player.sendMessage("Unknown god: " + item);
+                player.sendMessage("Unknown item: " + item);
                 break;
         }
         return true;

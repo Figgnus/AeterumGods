@@ -1,6 +1,7 @@
 package me.figgnus.aeterumgods.gods.hades;
 
 import me.figgnus.aeterumgods.AeterumGods;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -8,8 +9,6 @@ import org.bukkit.entity.ZombieHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZombieHorseAbilityListener implements Listener {
@@ -30,24 +29,34 @@ public class ZombieHorseAbilityListener implements Listener {
 
             // Check if the horse has the Frost Walker ability
             if ("true".equals(metadataValue)) {
-                // Get the block under the horse
-                Block blockUnder = zombieHorse.getLocation().subtract(0, 1, 0).getBlock();
-                zombieHorse.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1000, 1));
+                // Get the horse's location
+                Location horseLocation = zombieHorse.getLocation();
+                // Define a 2x2 area around the horse
+                int[][] offsets = {
+                        {0, 0},
+                        {1, 0},
+                        {0, 1},
+                        {1, 1}
+                };
+                for (int[] offset : offsets) {
+                    // Get the block under each position in the 2x2 area
+                    Block blockUnder = horseLocation.clone().add(offset[0], -1, offset[1]).getBlock();
 
-                // Check if the block under the horse is lava
-                if (blockUnder.getType() == Material.LAVA) {
-                    // Convert lava to ice
-                    blockUnder.setType(Material.BASALT);
+                    // Check if the block under the horse is lava
+                    if (blockUnder.getType() == Material.LAVA) {
+                        // Convert water to basalt
+                        blockUnder.setType(Material.BASALT);
 
-                    // Schedule a task to revert ice back to water after a delay
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            if (blockUnder.getType() == Material.BASALT) {
-                                blockUnder.setType(Material.LAVA);
+                        // Schedule a task to revert ice back to lava after a delay
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (blockUnder.getType() == Material.BASALT) {
+                                    blockUnder.setType(Material.LAVA);
+                                }
                             }
-                        }
-                    }.runTaskLater(plugin, 100); // 100 ticks = 5 seconds
+                        }.runTaskLater(plugin, 100); // 100 ticks = 5 seconds
+                    }
                 }
             }
         }

@@ -2,6 +2,8 @@ package me.figgnus.aeterumgods.gods.dionysos;
 
 import com.dre.brewery.BPlayer;
 import me.figgnus.aeterumgods.AeterumGods;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
@@ -67,6 +69,10 @@ public class DrunkHorseAbilityListener implements Listener {
                     for (Entity entity : horse.getNearbyEntities(2, 2, 2)) {
                         if (entity instanceof LivingEntity && entity != player) {
                             ((LivingEntity) entity).damage(damage);
+
+                            // Spawn particle effects at the location of the damaged entity
+                            Location loc = entity.getLocation();
+                            entity.getWorld().spawnParticle(Particle.SPELL_WITCH, loc, 10, 0.5, 0.5, 0.5, 0.01);
                         }
                     }
                 }

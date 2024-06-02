@@ -9,6 +9,6 @@ import java.util.List;
 public class TameCommandTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        return List.of("poseidon", "zeus", "hades", "demeter", "hermes", "dionysus", "zeuslevitate", "hermesspeed");
+        return List.of("poseidon", "zeus", "hades", "demeter", "hermes", "dionysus", "spawn");
     }
 }
