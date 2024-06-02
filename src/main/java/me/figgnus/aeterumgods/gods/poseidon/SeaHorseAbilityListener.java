@@ -3,6 +3,7 @@ package me.figgnus.aeterumgods.gods.poseidon;
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -46,11 +47,17 @@ public class SeaHorseAbilityListener implements Listener {
                         // Convert water to ice
                         blockUnder.setType(Material.FROSTED_ICE);
 
+                        // Spawn particle effect when converting to water
+                        blockUnder.getWorld().spawnParticle(Particle.SNOWBALL, blockUnder.getLocation().add(0.5, 0.5, 0.5), 10, 0.2, 0.2, 0.2, 0.02);
+
+
                         // Schedule a task to revert ice back to water after a delay
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 if (blockUnder.getType() == Material.FROSTED_ICE) {
+                                    // Spawn particle effect when reverting back to water
+                                    blockUnder.getWorld().spawnParticle(Particle.CLOUD, blockUnder.getLocation().add(0.5, 0.5, 0.5), 10, 0.2, 0.2, 0.2, 0.02);
                                     blockUnder.setType(Material.WATER);
                                 }
                             }

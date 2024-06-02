@@ -71,8 +71,10 @@ public class FlowerHorseAbilityListener implements Listener {
     private void plantSeeds(Player player, Block farmland, Material seedMaterial) {
         // Check the block above is farmland
         Block blockAbove = farmland.getRelative(0, 1, 0);
+        Block blockBackup = farmland.getRelative(0,0,0);
         Location loc = blockAbove.getLocation();
         blockAbove.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, loc, 10, 0.5, 0.5, 0.5, 0.01);
+        blockBackup.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, loc, 10, 0.5, 0.5, 0.5, 0.01);
 
         // Ensure the block above is air
         if (blockAbove.getType() == Material.AIR){

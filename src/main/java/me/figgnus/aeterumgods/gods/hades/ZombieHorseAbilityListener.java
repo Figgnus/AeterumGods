@@ -3,6 +3,7 @@ package me.figgnus.aeterumgods.gods.hades;
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ZombieHorse;
@@ -47,11 +48,16 @@ public class ZombieHorseAbilityListener implements Listener {
                         // Convert water to basalt
                         blockUnder.setType(Material.BASALT);
 
+                        // Spawn particle effect when converting to basalt
+                        blockUnder.getWorld().spawnParticle(Particle.SMOKE_LARGE, blockUnder.getLocation().add(0.5, 0.5, 0.5), 10, 0.2, 0.2, 0.2, 0.02);
+
                         // Schedule a task to revert ice back to lava after a delay
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 if (blockUnder.getType() == Material.BASALT) {
+                                    // Spawn particle effect when reverting back to lava
+                                    blockUnder.getWorld().spawnParticle(Particle.LAVA, blockUnder.getLocation().add(0.5, 0.5, 0.5), 10, 0.2, 0.2, 0.2, 0.02);
                                     blockUnder.setType(Material.LAVA);
                                 }
                             }
