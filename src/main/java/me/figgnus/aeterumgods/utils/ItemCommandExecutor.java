@@ -35,6 +35,9 @@ public class ItemCommandExecutor implements CommandExecutor {
             case "hermesspeed":
                 player.getInventory().addItem(CustomItems.createSpeedHorseAbilityItem());
                 break;
+            case "randomizer":
+                player.getInventory().addItem(CustomItems.createRandomizerItem());
+                break;
             default:
                 player.sendMessage("Unknown item: " + item);
                 break;

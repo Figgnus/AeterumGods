@@ -140,4 +140,14 @@ public class CustomItems {
 
         return item;
     }
+    public static ItemStack createRandomizerItem() {
+        ItemStack randomiser = new ItemStack(Material.DIAMOND_SHOVEL);
+        ItemMeta randomiserMeta = randomiser.getItemMeta();
+
+        randomiserMeta.setDisplayName("Randomizer");
+        randomiserMeta.setCustomModelData(1234567);
+        randomiser.setItemMeta(randomiserMeta);
+
+        return randomiser;
+    }
 }

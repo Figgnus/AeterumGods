@@ -18,6 +18,7 @@ import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseTameListener;
 import me.figgnus.aeterumgods.gods.zeus.BreedingItemListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
+import me.figgnus.aeterumgods.items.Randomizer;
 import me.figgnus.aeterumgods.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -48,6 +49,8 @@ public final class AeterumGods extends JavaPlugin {
         SpeedHorseAbilityListener speedHorseAbilityListener = new SpeedHorseAbilityListener(this);
         DrunkHorseTameListener drunkHorseTameListener = new DrunkHorseTameListener(this);
         DrunkHorseAbilityListener drunkHorseAbilityListener = new DrunkHorseAbilityListener(this);
+        Randomizer randomizer = new Randomizer(this);
+        SnowBallDamageListener snowBallDamageListener = new SnowBallDamageListener();
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(breedingItemListener,this);
@@ -67,6 +70,8 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(speedHorseAbilityListener, this);
         getServer().getPluginManager().registerEvents(drunkHorseTameListener, this);
         getServer().getPluginManager().registerEvents(drunkHorseAbilityListener, this);
+        getServer().getPluginManager().registerEvents(randomizer, this);
+        getServer().getPluginManager().registerEvents(snowBallDamageListener, this);
 
         // tab completers
         getCommand("tame").setTabCompleter(new TameCommandTabCompleter());

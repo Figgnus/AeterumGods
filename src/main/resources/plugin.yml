@@ -20,6 +20,9 @@ commands:
   dolphingrace:
     description: "Toggles dolphin's grace effect"
     usage: /<command>
+  randomizer:
+    description: "Gives player randomizer tool"
+    usage: /<command>
 
 
 
