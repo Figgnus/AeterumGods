@@ -28,7 +28,7 @@ public class SpeedBootsListener implements Listener {
                 player.sendMessage(ChatColor.RED + "You can't use this item.");
                 return;
             }
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 2, false));
         }else{
             player.removePotionEffect(PotionEffectType.SPEED);
         }

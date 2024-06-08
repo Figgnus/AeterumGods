@@ -5,6 +5,9 @@ import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
@@ -65,9 +68,8 @@ public class Randomizer implements Listener {
                     // Place the block if the adjacent block is air
                     if (adjacentBlock.getType() == Material.AIR && !(isLocationOccupied(adjacentBlock.getLocation()))) {
                         adjacentBlock.setType(selectMaterial);
+                        setBlockOrientation(adjacentBlock, blockFace ,selectMaterial);
 
-                        //subtract durability
-                        item.setDurability((short) (item.getDurability() + 1));
                         //Play sound
                         playPlacemendSound(player, selectMaterial);
 
@@ -81,6 +83,33 @@ public class Randomizer implements Listener {
         }
         cooldowns.put(playerUuid, System.currentTimeMillis());
     }
+
+    private void setBlockOrientation(Block block, BlockFace face, Material material) {
+        BlockData blockData = block.getBlockData();
+        if (blockData instanceof Directional) {
+            Directional directional = (Directional) blockData;
+            directional.setFacing(face.getOppositeFace());
+            block.setBlockData(directional);
+        } else if (blockData instanceof Orientable) {
+            Orientable orientable = (Orientable) blockData;
+            switch (face) {
+                case UP:
+                case DOWN:
+                    orientable.setAxis(Axis.Y);
+                    break;
+                case NORTH:
+                case SOUTH:
+                    orientable.setAxis(Axis.Z);
+                    break;
+                case EAST:
+                case WEST:
+                    orientable.setAxis(Axis.X);
+                    break;
+            }
+            block.setBlockData(orientable);
+        }
+    }
+
     private boolean isLocationOccupied(Location location) {
         World world = location.getWorld();
         if (world == null){

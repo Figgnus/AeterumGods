@@ -1,6 +1,7 @@
 package me.figgnus.aeterumgods;
 
 import com.dre.brewery.BPlayer;
+import me.figgnus.aeterumgods.gods.demeter.BetterBonemealListener;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
 import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseAbilityListener;
@@ -18,19 +19,27 @@ import me.figgnus.aeterumgods.gods.zeus.PegasusAbilityListener;
 import me.figgnus.aeterumgods.gods.poseidon.SeaHorseTameListener;
 import me.figgnus.aeterumgods.gods.zeus.BreedingItemListener;
 import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
+import me.figgnus.aeterumgods.items.CustomItems;
 import me.figgnus.aeterumgods.items.Randomizer;
 import me.figgnus.aeterumgods.utils.*;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public final class AeterumGods extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
         DolphinGraceListener dolphinGraceListener = new DolphinGraceListener();
         NightVisionListener nightVisionListener = new NightVisionListener();
         SeaHorseTameListener seaHorseListener = new SeaHorseTameListener(this);
@@ -51,6 +60,7 @@ public final class AeterumGods extends JavaPlugin {
         DrunkHorseAbilityListener drunkHorseAbilityListener = new DrunkHorseAbilityListener(this);
         Randomizer randomizer = new Randomizer(this);
         SnowBallDamageListener snowBallDamageListener = new SnowBallDamageListener();
+        BetterBonemealListener betterBonemealListener = new BetterBonemealListener();
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(breedingItemListener,this);
@@ -72,6 +82,7 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(drunkHorseAbilityListener, this);
         getServer().getPluginManager().registerEvents(randomizer, this);
         getServer().getPluginManager().registerEvents(snowBallDamageListener, this);
+        getServer().getPluginManager().registerEvents(betterBonemealListener, this);
 
         // tab completers
         getCommand("tame").setTabCompleter(new TameCommandTabCompleter());
@@ -82,7 +93,42 @@ public final class AeterumGods extends JavaPlugin {
         getCommand("nightvision").setExecutor(nightVisionListener);
         getCommand("dolphingrace").setExecutor(dolphinGraceListener);
 
+        createCustomItems();
+
+        saveCustomItemsToConfig();
+
     }
+
+    private void createCustomItems() {
+        CustomItems.createCustomConduit();
+        CustomItems.createFlyingItem();
+        CustomItems.createBreedingItem();
+        CustomItems.createCustomBoots();
+        CustomItems.cretatePoseidonTameItem();
+        CustomItems.createHadesTameItem();
+        CustomItems.createPegasusAbilityItem();
+        CustomItems.createZeusTameItem();
+        CustomItems.createDemeterTameItem();
+        CustomItems.createHermesTameItem();
+        CustomItems.createDionysusTameItem();
+        CustomItems.createSpeedHorseAbilityItem();
+        CustomItems.createBetterBonemeal();
+        CustomItems.createRandomizerItem();
+    }
+
+    private void saveCustomItemsToConfig() {
+        FileConfiguration config = getConfig();
+        config.set("custom-items", null); // Clear existing custom-items section
+
+        List<CustomItems.CustomItem> customItems = CustomItems.getCustomItems();
+        for (CustomItems.CustomItem customItem : customItems) {
+            String path = "custom-items." + customItem.getName();
+            config.set(path + ".id", customItem.getCustomModelData());
+        }
+
+        saveConfig();
+    }
+
     @Override
     public void onDisable() {
         // Plugin shutdown logic

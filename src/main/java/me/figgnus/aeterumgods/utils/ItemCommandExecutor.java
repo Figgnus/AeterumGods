@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.utils;
 
+import com.dre.brewery.recipe.CustomItem;
 import me.figgnus.aeterumgods.items.CustomItems;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,6 +38,9 @@ public class ItemCommandExecutor implements CommandExecutor {
                 break;
             case "randomizer":
                 player.getInventory().addItem(CustomItems.createRandomizerItem());
+                break;
+            case "bonemeal":
+                player.getInventory().addItem(CustomItems.createBetterBonemeal());
                 break;
             default:
                 player.sendMessage("Unknown item: " + item);
