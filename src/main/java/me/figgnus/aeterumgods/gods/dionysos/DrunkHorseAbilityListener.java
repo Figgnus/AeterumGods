@@ -2,16 +2,16 @@ package me.figgnus.aeterumgods.gods.dionysos;
 
 import com.dre.brewery.BPlayer;
 import me.figgnus.aeterumgods.AeterumGods;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,21 +23,25 @@ public class DrunkHorseAbilityListener implements Listener {
 
     public DrunkHorseAbilityListener(AeterumGods plugin) {
         this.plugin = plugin;
+        startPeriodicTask();
     }
 
-
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-
-        // Check if the player is riding a horse
-        if (player.isInsideVehicle() && player.getVehicle() instanceof Horse) {
-            Horse horse = (Horse) player.getVehicle();
-            String metadataValue = plugin.getEntityMetadata(horse, DrunkHorseTameListener.DRUNK_KEY);
-            if ("true".equals(metadataValue)){
-                startAuraTask(player, horse);
+    private void startPeriodicTask() {
+        BukkitRunnable task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.isInsideVehicle() && player.getVehicle() instanceof Horse) {
+                        Horse horse = (Horse) player.getVehicle();
+                        String metadataValue = plugin.getEntityMetadata(horse, DrunkHorseTameListener.DRUNK_KEY);
+                        if ("true".equals(metadataValue)) {
+                            startAuraTask(player, horse);
+                        }
+                    }
+                }
             }
-        }
+        };
+        task.runTaskTimer(plugin, 0, 20); // Run task every second (20 ticks)
     }
 
     private void startAuraTask(Player player, Horse horse) {
@@ -59,16 +63,23 @@ public class DrunkHorseAbilityListener implements Listener {
 
                 // Get the player's drunkenness level
                 BPlayer bPlayer = BPlayer.get(player);
+                // Check if bPlayer is null
+                if (bPlayer == null) {
+                    return; // Skip this iteration if bPlayer is null
+                }
                 int drunkenness = bPlayer.getDrunkeness();
 
                 if (drunkenness > 0) {
                     // Calculate damage based on drunkenness level
-                    double damage = drunkenness * 0.1; // Example: 0.1 damage per drunkenness level
+                    double damage = drunkenness * 0.03; // Example: 0.1 damage per drunkenness level
 
                     // Apply damage to nearby entities
                     for (Entity entity : horse.getNearbyEntities(2, 2, 2)) {
                         if (entity instanceof LivingEntity && entity != player) {
                             ((LivingEntity) entity).damage(damage);
+                            // Apply knockback effect
+                            Vector knockback = entity.getLocation().toVector().subtract(horse.getLocation().toVector()).normalize().multiply(0.1 * drunkenness);
+                            entity.setVelocity(knockback);
 
                             // Spawn particle effects at the location of the damaged entity
                             Location loc = entity.getLocation();

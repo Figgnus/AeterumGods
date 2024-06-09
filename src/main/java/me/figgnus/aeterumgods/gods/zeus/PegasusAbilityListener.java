@@ -47,8 +47,9 @@ public class PegasusAbilityListener implements Listener {
             String metadataValue = plugin.getEntityMetadata(horse, PegasusTameListener.LEVITATE_KEY);
             if ("true".equals(metadataValue)){
                 // Apply levitation effect to the horse
-                horse.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 160, 1)); // 100 ticks = 5 seconds
-                player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 160, 1)); // 100 ticks = 5 seconds
+                horse.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 180, 1)); // 100 ticks = 5 seconds
+                player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 180, 1)); // 100 ticks = 5 seconds
+                horse.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 180, 5));
 
                 // Schedule a task to apply fall damage immunity after Levitation ends
                 new BukkitRunnable() {
