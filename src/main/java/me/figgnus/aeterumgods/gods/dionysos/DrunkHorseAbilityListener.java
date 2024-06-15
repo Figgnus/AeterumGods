@@ -78,7 +78,7 @@ public class DrunkHorseAbilityListener implements Listener {
                         if (entity instanceof LivingEntity && entity != player) {
                             ((LivingEntity) entity).damage(damage);
                             // Apply knockback effect
-                            Vector knockback = entity.getLocation().toVector().subtract(horse.getLocation().toVector()).normalize().multiply(0.1 * drunkenness);
+                            Vector knockback = entity.getLocation().toVector().subtract(horse.getLocation().toVector()).normalize().multiply(1);
                             entity.setVelocity(knockback);
 
                             // Spawn particle effects at the location of the damaged entity
