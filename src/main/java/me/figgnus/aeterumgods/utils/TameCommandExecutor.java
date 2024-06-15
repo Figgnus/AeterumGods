@@ -16,6 +16,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
@@ -133,6 +135,7 @@ public class TameCommandExecutor implements CommandExecutor {
 
             horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
             horse.getAttribute(Attribute.HORSE_JUMP_STRENGTH).setBaseValue(jump);
+            horse.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1));
             horse.setMaxHealth(health);
             horse.setHealth(health);
 
