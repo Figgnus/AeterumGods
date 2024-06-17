@@ -26,7 +26,9 @@ public class SpeedHorseAbilityListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
+        if (item == null)return;
         if (item.getItemMeta() == null)return;
+        if (!item.hasItemMeta())return;
 
         if (item.getType() == Material.POTION && player.isInsideVehicle() && player.getVehicle() instanceof Horse && item.getItemMeta().getCustomModelData() == 112) {
             if (!player.hasPermission("aeterumgods.hermestame.use")){

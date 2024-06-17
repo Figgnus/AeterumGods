@@ -195,6 +195,19 @@ public class CustomItems {
         customItems.add(new CustomItem("Super Bonemeal", 113, item));
         return item;
     }
+    // Item for Demeter (growth potion)
+    public static ItemStack createGrowthPotion(){
+        ItemStack item = new ItemStack(Material.POTION);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(114);
+        meta.setDisplayName(ChatColor.GREEN + "Growth Potion");
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        item.setItemMeta(meta);
+
+        customItems.add(new CustomItem("Growth Potion", 114, item));
+        return item;
+    }
+
     public static ItemStack createRandomizerItem() {
         ItemStack randomiser = new ItemStack(Material.DIAMOND_SHOVEL);
         ItemMeta randomiserMeta = randomiser.getItemMeta();

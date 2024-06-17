@@ -4,6 +4,7 @@ import com.dre.brewery.BPlayer;
 import me.figgnus.aeterumgods.gods.demeter.BetterBonemealListener;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
+import me.figgnus.aeterumgods.gods.demeter.GrowthPotionListener;
 import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseTameListener;
 import me.figgnus.aeterumgods.gods.hades.NightVisionListener;
@@ -61,6 +62,7 @@ public final class AeterumGods extends JavaPlugin {
         Randomizer randomizer = new Randomizer(this);
         SnowBallDamageListener snowBallDamageListener = new SnowBallDamageListener();
         BetterBonemealListener betterBonemealListener = new BetterBonemealListener();
+        GrowthPotionListener growthPotionListener = new GrowthPotionListener(this);
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(nightVisionListener,this);
         getServer().getPluginManager().registerEvents(breedingItemListener,this);
@@ -83,6 +85,7 @@ public final class AeterumGods extends JavaPlugin {
         getServer().getPluginManager().registerEvents(randomizer, this);
         getServer().getPluginManager().registerEvents(snowBallDamageListener, this);
         getServer().getPluginManager().registerEvents(betterBonemealListener, this);
+        getServer().getPluginManager().registerEvents(growthPotionListener, this);
 
         // tab completers
         getCommand("tame").setTabCompleter(new TameCommandTabCompleter());
@@ -99,6 +102,7 @@ public final class AeterumGods extends JavaPlugin {
 
     }
 
+    // adds custom items to list so they can be written into config
     private void createCustomItems() {
         CustomItems.createCustomConduit();
         CustomItems.createFlyingItem();
@@ -114,8 +118,10 @@ public final class AeterumGods extends JavaPlugin {
         CustomItems.createSpeedHorseAbilityItem();
         CustomItems.createBetterBonemeal();
         CustomItems.createRandomizerItem();
+        CustomItems.createGrowthPotion();
     }
 
+    // writes items and id into the config
     private void saveCustomItemsToConfig() {
         FileConfiguration config = getConfig();
         config.set("custom-items", null); // Clear existing custom-items section

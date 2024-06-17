@@ -42,6 +42,9 @@ public class ItemCommandExecutor implements CommandExecutor {
             case "bonemeal":
                 player.getInventory().addItem(CustomItems.createBetterBonemeal());
                 break;
+            case "growth":
+                player.getInventory().addItem(CustomItems.createGrowthPotion());
+                break;
             default:
                 player.sendMessage("Unknown item: " + item);
                 break;
