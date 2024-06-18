@@ -29,7 +29,7 @@ public class GrowthPotionListener implements Listener {
         if (!item.hasItemMeta())return;
         
         if (item.getType() == Material.POTION && item.getItemMeta().getCustomModelData() == 114){
-            if (!player.hasPermission("aeterumgods.growth.use")){
+            if (!player.hasPermission("3")){
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
                 return;
             }
