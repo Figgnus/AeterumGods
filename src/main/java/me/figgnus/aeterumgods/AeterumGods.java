@@ -37,6 +37,8 @@ import java.util.Map;
 
 public final class AeterumGods extends JavaPlugin {
 
+    //branch test
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
