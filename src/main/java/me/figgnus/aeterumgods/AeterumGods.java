@@ -37,7 +37,7 @@ import java.util.Map;
 
 public final class AeterumGods extends JavaPlugin {
 
-    // master branch
+    //master branch
 
     @Override
     public void onEnable() {
