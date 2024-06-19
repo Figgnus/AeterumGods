@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.gods.demeter;
 
+
 import me.figgnus.aeterumgods.AeterumGods;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -29,7 +30,7 @@ public class GrowthPotionListener implements Listener {
         if (!item.hasItemMeta())return;
         
         if (item.getType() == Material.POTION && item.getItemMeta().getCustomModelData() == 114){
-            if (!player.hasPermission("3")){
+            if (!player.hasPermission("aeterumgods.growth.use")){
                 player.sendMessage(ChatColor.RED + "You don't have permission to do this.");
                 return;
             }

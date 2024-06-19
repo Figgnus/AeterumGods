@@ -1,5 +1,6 @@
 package me.figgnus.aeterumgods.items;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;

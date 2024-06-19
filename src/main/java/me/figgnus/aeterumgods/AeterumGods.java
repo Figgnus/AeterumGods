@@ -1,10 +1,14 @@
 package me.figgnus.aeterumgods;
 
 import com.dre.brewery.BPlayer;
-import me.figgnus.aeterumgods.gods.demeter.BetterBonemealListener;
-import me.figgnus.aeterumgods.gods.demeter.FlowerHorseAbilityListener;
-import me.figgnus.aeterumgods.gods.demeter.FlowerHorseTameListener;
-import me.figgnus.aeterumgods.gods.demeter.GrowthPotionListener;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import me.figgnus.aeterumgods.gods.demeter.*;
 import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseAbilityListener;
 import me.figgnus.aeterumgods.gods.dionysos.DrunkHorseTameListener;
 import me.figgnus.aeterumgods.gods.hades.NightVisionListener;
@@ -23,25 +27,49 @@ import me.figgnus.aeterumgods.gods.zeus.PegasusTameListener;
 import me.figgnus.aeterumgods.items.CustomItems;
 import me.figgnus.aeterumgods.items.Randomizer;
 import me.figgnus.aeterumgods.utils.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class AeterumGods extends JavaPlugin {
+public final class AeterumGods extends JavaPlugin implements SlimefunAddon {
 
     //branch test
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        NamespacedKey categoryId = new NamespacedKey(this, "cool_category");
+        CustomItemStack categoryItem = new CustomItemStack(Material.DIAMOND, "&4Our very cool Category");
+        ItemGroup itemGroup = new ItemGroup(categoryId, categoryItem);
+
+// The custom item for our SlimefunItem
+        SlimefunItemStack itemStack = new SlimefunItemStack("MY_ADDON_ITEM", Material.POTION, ChatColor.GREEN + "Fire Cake", "", "&7This is awesome");
+
+// A 3x3 shape representing our recipe
+        ItemStack[] recipe = {
+                new ItemStack(Material.DIAMOND),    null,                               new ItemStack(Material.DIAMOND),
+                null,                               SlimefunItems.CARBONADO,            null,
+                new ItemStack(Material.DIAMOND),    null,                               new ItemStack(Material.DIAMOND)
+        };
+
+// We are now using our own custom class for this
+        GrowthPotionSlimefun growthPotionSlimefun = new GrowthPotionSlimefun(itemGroup, itemStack, RecipeType.ENHANCED_CRAFTING_TABLE, recipe, this);
+        growthPotionSlimefun.register(this);
+
 
         DolphinGraceListener dolphinGraceListener = new DolphinGraceListener();
         NightVisionListener nightVisionListener = new NightVisionListener();
@@ -159,5 +187,17 @@ public final class AeterumGods extends JavaPlugin {
     public int getDrunkennessLevel(Player player){
         BPlayer bPlayer = BPlayer.get(player);
         return bPlayer.getDrunkeness();
+    }
+
+    @NotNull
+    @Override
+    public JavaPlugin getJavaPlugin() {
+        return this;
+    }
+
+    @Nullable
+    @Override
+    public String getBugTrackerURL() {
+        return "";
     }
 }
